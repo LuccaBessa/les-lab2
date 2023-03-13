@@ -12,9 +12,9 @@ if not all(col in repos_df.columns for col in ['CBO', 'DIT', 'LCOM']):
             os.system(f"git clone {row['url']}")
             repo_path = row['name']
 
-            os.system(f"java -jar ck-x.x.x-SNAPSHOT-jar-with-dependencies.jar {repo_path} true 0 true ck_output")
+            os.system(f"sudo java -jar ./jar/ck.jar {repo_path} true 0 false ck_output")
 
-            ck_csv_path = os.path.join(repo_path, 'ck.csv')
+            ck_csv_path = os.path.join('ck_output', 'ck.csv')
             ck_df = pd.read_csv(ck_csv_path)
 
             cbo_mean = ck_df['CBO'].mean()
@@ -25,9 +25,9 @@ if not all(col in repos_df.columns for col in ['CBO', 'DIT', 'LCOM']):
             repos_df.loc[index, 'DIT'] = dit_mean
             repos_df.loc[index, 'LCOM'] = lcom_mean
             repos_df.to_csv(csv_path, index=False)
-            repos_df = pd.read_csv(csv_path)
 
             os.system(f"rm -rf {repo_path}")
+            os.system(f"rm -rf ck_output")
 
 else:
     print("Required columns already exist in the CSV file.")

@@ -14,7 +14,7 @@ def getData():
     while hasNextPage:
         query = """
         {
-            search (query: "stars:>100", type: REPOSITORY, first: 10, after: %s) {
+            search (query: "stars:>100 language:Java", type: REPOSITORY, first: 10, after: %s) {
                 pageInfo {
                     startCursor
                     hasNextPage
