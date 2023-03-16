@@ -1,12 +1,7 @@
-import argparse
 import pandas as pd
 import os
 
-parser = argparse.ArgumentParser()
-parser.add_argument('--filename', help='name of the CSV file to generate')
-args = parser.parse_args()
-
-csv_path = args.filename
+csv_path = './data/repos.csv'
 repos_df = pd.read_csv(csv_path)
 
 if not all(col in repos_df.columns for col in ['CBO', 'DIT', 'LCOM']):
@@ -19,23 +14,12 @@ if not all(col in repos_df.columns for col in ['CBO', 'DIT', 'LCOM']):
 
             os.system(f"sudo java -jar ./jar/ck.jar {repo_path} true 0 false ck_output")
 
-            ck_csv_path = os.path.join('ck_output', 'ck.csv')
+            ck_csv_path = os.path.join('ck_outputclass.csv')
             ck_df = pd.read_csv(ck_csv_path)
-            
-            if ck_df['cbo'] != None:
-                cbo_mean = ck_df['cbo'].median()
-            else:
-                cbo_mean = "-"
-            
-            if ck_df['dit'] != None:
-                dit_mean = ck_df['dit'].max()
-            else:
-                dit_mean = "-"
 
-            if ck_df['lcom'] != None:
-                lcom_mean = ck_df['lcom'].median()
-            else:
-                lcom_mean = "-"
+            cbo_mean = ck_df['CBO'].median()
+            dit_mean = ck_df['DIT'].max()
+            lcom_mean = ck_df['LCOM'].median()
 
             repos_df.loc[index, 'CBO'] = cbo_mean
             repos_df.loc[index, 'DIT'] = dit_mean
@@ -43,7 +27,8 @@ if not all(col in repos_df.columns for col in ['CBO', 'DIT', 'LCOM']):
             repos_df.to_csv(csv_path, index=False)
 
             os.system(f"rm -rf {repo_path}")
-            os.system(f"rm -rf ck_output")
+            os.system(f"rm ck_outputclass.csv")
+            os.system(f"rm ck_outputmethod.csv")
 
 else:
     print("Required columns already exist in the CSV file.")
