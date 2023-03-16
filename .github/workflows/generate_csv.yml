@@ -29,7 +29,7 @@ jobs:
     - name: Install dependencies
       run: pip install pandas # Replace with the name of your requirements file, if you have one
     - name: Generate CSV
-      run: python ·/src/ck.py --filename ${{ inputs.CSV_FILENAME }}
+      run: python ·/src/ck.py --filename ${{ env.CSV_FILENAME }}
     - name: Upload CSV artifact
       uses: actions/upload-artifact@v2
       with:
