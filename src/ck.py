@@ -1,7 +1,7 @@
 import pandas as pd
 import os
 
-csv_path = './data/repos.csv'
+csv_path = './src/data/repos.csv'
 repos_df = pd.read_csv(csv_path)
 
 if not all(col in repos_df.columns for col in ['CBO', 'DIT', 'LCOM']):
