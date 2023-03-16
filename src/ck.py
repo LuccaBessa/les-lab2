@@ -13,7 +13,7 @@ for index, row in repos_df.iterrows():
 
         os.system(f"sudo java -jar ./jar/ck.jar {repo_path} true 0 false ck_output")
 
-        ck_csv_path = "./ck_outputclass.csv"
+        ck_csv_path = "../ck_outputclass.csv"
         ck_df = pd.read_csv(ck_csv_path)
 
         cbo_mean = ck_df['CBO'].median()
