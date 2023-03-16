@@ -5,7 +5,7 @@ csv_path = './src/data/repos.csv'
 repos_df = pd.read_csv(csv_path)
 
 for index, row in repos_df.iterrows():
-    if pd.isnull(row['CBO']) or pd.isnull(row['DIT']) or pd.isnull(row['LCOM']):
+    if pd.isna(row['CBO']) or pd.isna(row['DIT']) or pd.isna(row['LCOM']):
         print(f"Processing {row['name']}...")
 
         os.system(f"git clone {row['url']}")
