@@ -18,6 +18,7 @@ jobs:
       uses: actions/setup-java@v2
       with:
         java-version: ${{ matrix.java }}
+        distribution: 'adopt'
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
