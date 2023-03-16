@@ -3,30 +3,32 @@ name: Generate and retrieve CSV
 on:
   push:
     branches:
-      - master
+      - repos_0_250
+      - repos_251_500
+      - repos_501_750
+      - repos_751_1000
 
 jobs:
   generate-csv:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
-    - name: Set up Java
-      uses: actions/setup-java@v2
-      with:
-        java-version: 8
-        distribution: 'adopt'
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-          python-version: '3.10.10' # Replace with the version of Python you want to use
-    - name: Install dependencies
-      run: pip install pandas # Replace with the name of your requirements file, if you have one
-    - name: Generate CSV
-      run: python ./src/ck.py --filename ${{ env.CSV_FILENAME }}
-    - name: Upload CSV artifact
-      uses: actions/upload-artifact@v2
-      with:
-        name: generated-csv
-        path: ./src/data/repos.csv # Replace with the path to your generated CSV file
-
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Set up Java
+        uses: actions/setup-java@v2
+        with:
+          java-version: 8
+          distribution: "adopt"
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.10.10"
+      - name: Install dependencies
+        run: pip install pandas
+      - name: Generate CSV
+        run: python ./src/ck.py
+      - name: Upload CSV artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: generated-csv
+          path: ./src/data/repos.csv
