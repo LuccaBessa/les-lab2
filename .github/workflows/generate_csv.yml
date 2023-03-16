@@ -3,7 +3,7 @@ name: Generate and retrieve CSV
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   generate-csv:
