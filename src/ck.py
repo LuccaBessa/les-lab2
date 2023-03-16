@@ -14,19 +14,28 @@ for index, row in repos_df.iterrows():
         os.system(f"sudo java -jar ./src/jar/ck.jar {repo_path} true 0 false ck_output")
 
         ck_csv_path = "./ck_outputclass.csv"
-        ck_df = pd.read_csv(ck_csv_path)
 
-        cbo_mean = ck_df['cbo'].median()
-        dit_mean = ck_df['dit'].max()
-        lcom_mean = ck_df['lcom'].median()
+        try:
+            ck_df = pd.read_csv(ck_csv_path)
 
-        repos_df.loc[index, 'CBO'] = cbo_mean
-        repos_df.loc[index, 'DIT'] = dit_mean
-        repos_df.loc[index, 'LCOM'] = lcom_mean
-        repos_df.to_csv(csv_path, index=False)
+            cbo_mean = ck_df['cbo'].median()
+            dit_mean = ck_df['dit'].max()
+            lcom_mean = ck_df['lcom'].median()
 
-        os.system(f"rm -rf {repo_path}")
-        os.system(f"rm -f ck_outputclass.csv")
-        os.system(f"rm -f ck_outputmethod.csv")
+            repos_df.loc[index, 'CBO'] = cbo_mean
+            repos_df.loc[index, 'DIT'] = dit_mean
+            repos_df.loc[index, 'LCOM'] = lcom_mean
+            repos_df.to_csv(csv_path, index=False)
+        except pd.errors.EmptyDataError:
+            print('Error: The file is empty.')
+
+            repos_df.loc[index, 'CBO'] = '-'
+            repos_df.loc[index, 'DIT'] = '-'
+            repos_df.loc[index, 'LCOM'] = '-'
+            repos_df.to_csv(csv_path, index=False)
+        finally:
+            os.system(f"rm -rf {repo_path}")
+            os.system(f"rm -f ck_outputclass.csv")
+            os.system(f"rm -f ck_outputmethod.csv")
     else:
         print(f"{row['folderName']} already processed")
