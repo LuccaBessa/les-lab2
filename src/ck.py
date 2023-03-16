@@ -1,7 +1,12 @@
+import argparse
 import pandas as pd
 import os
 
-csv_path = 'repos.csv'
+parser = argparse.ArgumentParser()
+parser.add_argument('--filename', help='name of the CSV file to generate')
+args = parser.parse_args()
+
+csv_path = args.filename
 repos_df = pd.read_csv(csv_path)
 
 if not all(col in repos_df.columns for col in ['CBO', 'DIT', 'LCOM']):
@@ -16,10 +21,21 @@ if not all(col in repos_df.columns for col in ['CBO', 'DIT', 'LCOM']):
 
             ck_csv_path = os.path.join('ck_output', 'ck.csv')
             ck_df = pd.read_csv(ck_csv_path)
+            
+            if ck_df['cbo'] != None:
+                cbo_mean = ck_df['cbo'].median()
+            else:
+                cbo_mean = "-"
+            
+            if ck_df['dit'] != None:
+                dit_mean = ck_df['dit'].max()
+            else:
+                dit_mean = "-"
 
-            cbo_mean = ck_df['CBO'].mean()
-            dit_mean = ck_df['DIT'].mean()
-            lcom_mean = ck_df['LCOM'].mean()
+            if ck_df['lcom'] != None:
+                lcom_mean = ck_df['lcom'].median()
+            else:
+                lcom_mean = "-"
 
             repos_df.loc[index, 'CBO'] = cbo_mean
             repos_df.loc[index, 'DIT'] = dit_mean
