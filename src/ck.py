@@ -29,4 +29,4 @@ for index, row in repos_df.iterrows():
         os.system(f"rm ck_outputclass.csv")
         os.system(f"rm ck_outputmethod.csv")
     else:
-        print(f'{row['name']} already processed')
+        print(f"{row['name']} already processed")
