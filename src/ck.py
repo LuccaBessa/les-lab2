@@ -11,14 +11,14 @@ for index, row in repos_df.iterrows():
         os.system(f"git clone {row['url']}")
         repo_path = row['folderName']
 
-        os.system(f"sudo java -jar ./jar/ck.jar {repo_path} true 0 false ck_output")
+        os.system(f"sudo java -jar ./src/jar/ck.jar {repo_path} true 0 false ck_output")
 
-        ck_csv_path = "../ck_outputclass.csv"
+        ck_csv_path = "./ck_outputclass.csv"
         ck_df = pd.read_csv(ck_csv_path)
 
-        cbo_mean = ck_df['CBO'].median()
-        dit_mean = ck_df['DIT'].max()
-        lcom_mean = ck_df['LCOM'].median()
+        cbo_mean = ck_df['cbo'].median()
+        dit_mean = ck_df['dit'].max()
+        lcom_mean = ck_df['lcom'].median()
 
         repos_df.loc[index, 'CBO'] = cbo_mean
         repos_df.loc[index, 'DIT'] = dit_mean
@@ -26,7 +26,7 @@ for index, row in repos_df.iterrows():
         repos_df.to_csv(csv_path, index=False)
 
         os.system(f"rm -rf {repo_path}")
-        os.system(f"rm ck_outputclass.csv")
-        os.system(f"rm ck_outputmethod.csv")
+        os.system(f"rm -f ck_outputclass.csv")
+        os.system(f"rm -f ck_outputmethod.csv")
     else:
         print(f"{row['folderName']} already processed")
