@@ -6,10 +6,10 @@ repos_df = pd.read_csv(csv_path)
 
 for index, row in repos_df.iterrows():
     if pd.isna(row['CBO']) or pd.isna(row['DIT']) or pd.isna(row['LCOM']):
-        print(f"Processing {row['name']}...")
+        print(f"Processing {row['folderName']}...")
 
         os.system(f"git clone {row['url']}")
-        repo_path = row['name']
+        repo_path = row['folderName']
 
         os.system(f"sudo java -jar ./jar/ck.jar {repo_path} true 0 false ck_output")
 
@@ -29,4 +29,4 @@ for index, row in repos_df.iterrows():
         os.system(f"rm ck_outputclass.csv")
         os.system(f"rm ck_outputmethod.csv")
     else:
-        print(f"{row['name']} already processed")
+        print(f"{row['folderName']} already processed")
