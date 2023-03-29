@@ -27,6 +27,9 @@ def getData():
                         url
                         createdAt
                         stargazerCount
+                        releases {
+                            totalCount
+                        }
                     }
                 }
             }
@@ -51,6 +54,7 @@ def getData():
                 'url': repoData['url'],
                 'createdAt': createdAt,
                 'stargazerCount': repoData['stargazerCount'],
+                'releases': repoData['releases']['totalCount'],
             })
 
     return data
