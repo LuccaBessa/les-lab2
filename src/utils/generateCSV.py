@@ -7,6 +7,8 @@ headers = [
     'url',
     'createdAt',
     'stargazerCount',
+    'releases',
+    'LOC',
     'CBO',
     'DIT',
     'LCOM',
@@ -26,5 +28,10 @@ def generateCSV(json, filename):
                 repo['name'],
                 repo['url'],
                 repo['createdAt'],
-                repo['stargazerCount']
+                repo['stargazerCount'],
+                repo['releases'],
+                None,
+                None,
+                None,
+                None,
             ])
