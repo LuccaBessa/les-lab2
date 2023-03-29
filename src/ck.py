@@ -24,8 +24,6 @@ for index, row in repos_df.iterrows():
             lcom_mean = ck_df['lcom'].median()
             loc_sum = ck_df['loc'].sum()
 
-            print(f"CBO: {cbo_mean}")
-
             repos_df.loc[index, 'LOC'] = '-' if math.isnan(loc_sum) else loc_sum
             repos_df.loc[index, 'CBO'] = '-' if math.isnan(cbo_mean) else cbo_mean
             repos_df.loc[index, 'DIT'] = '-' if math.isnan(dit_mean) else dit_mean
